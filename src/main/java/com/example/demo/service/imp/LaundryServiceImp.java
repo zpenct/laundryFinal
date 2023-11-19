@@ -10,6 +10,8 @@ import com.example.demo.repository.LaundryRepos;
 import com.example.demo.service.LaundryService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -23,6 +25,10 @@ public class LaundryServiceImp implements LaundryService {
     private final LaundryRepos laundryRepos;
     private final FasilitasRepos fasilitasRepos;
 
+    private boolean isNullOrEmpty(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+
     public LaundryServiceImp(LaundryRepos laundryRepos, FasilitasRepos fasilitasRepos) {
         this.laundryRepos = laundryRepos;
         this.fasilitasRepos = fasilitasRepos;
@@ -31,6 +37,15 @@ public class LaundryServiceImp implements LaundryService {
     @Override
     @Transactional
     public LaundryResponseDTO create(LaundryRequestDTO dto) {
+        if (dto == null ||
+                isNullOrEmpty(dto.nama()) ||
+                isNullOrEmpty(dto.lokasi()) ||
+                isNullOrEmpty(dto.jam_buka()) ||
+                isNullOrEmpty(dto.jam_tutup()) ||
+                isNullOrEmpty(dto.no_hp())
+            ) {
+            throw new IllegalArgumentException("Data Laundry tidak boleh kosong");
+        }
         // save loundry
         Laundry loundryResponse = laundryRepos.save(LaundryMapper.toEntity(dto));
 
@@ -64,8 +79,24 @@ public class LaundryServiceImp implements LaundryService {
 
     @Override
     public LaundryResponseDTO get(Long id) {
-        Laundry loundryResponse = laundryRepos.findById(id).orElseThrow(() -> new EntityNotFoundException("loundy of " + id + " not found"));
-        return LaundryMapper.toDTO(loundryResponse, loundryResponse.getFasilitasList());
+        Laundry laundryResponse = laundryRepos.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Laundry with ID " + id + " not found"));
+        return LaundryMapper.toDTO(laundryResponse, laundryResponse.getFasilitasList());
+//        try {
+//            Laundry laundryResponse = laundryRepos.findById(id)
+//                    .orElseThrow(() -> new EntityNotFoundException("Laundry with ID " + id + " not found"));
+//
+//            return ResponseEntity.ok();LaundryMapper.toDTO(laundryResponse, laundryResponse.getFasilitasList());
+//        } catch (EntityNotFoundException ex) {
+//            // Tangani pengecualian EntityNotFoundException
+//            ex.printStackTrace(); // Untuk sementara, hanya mencetak stack trace
+////            throw new RuntimeException("Failed to find Laundry with ID " + id, ex);
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Laundry with ID " + id + " not found");
+//
+//        } catch (Exception ex) {
+//            ex.printStackTrace(); // Untuk sementara, hanya mencetak stack trace
+//            throw new RuntimeException("An unexpected error occurred", ex);
+//        }
     }
 
 

@@ -28,9 +28,9 @@ public class LaundryMapper {
                 laundry.getId(),
                 laundry.getNama(),
                 laundry.getLokasi(),
-                laundry.getNo_hp(),
                 laundry.getJam_buka(),
                 laundry.getJam_tutup(),
+                laundry.getNo_hp(),
                 fasilitas
                         .stream()
                         .map(LaundryMapper::toDTO)

@@ -6,13 +6,13 @@ import java.util.List;
 @Table(name = "laundry")
 public class
 Laundry {
-    public Laundry(Long id, String nama, String lokasi, String no_hp, String jam_buka, String jam_tutup, List<Fasilitas> fasilitasList) {
+    public Laundry(Long id, String nama, String lokasi, String jam_buka, String jam_tutup,String no_hp, List<Fasilitas> fasilitasList) {
         this.id = id;
         this.nama = nama;
         this.lokasi = lokasi;
-        this.no_hp = no_hp;
         this.jam_buka = jam_buka;
         this.jam_tutup = jam_tutup;
+        this.no_hp = no_hp;
         this.fasilitasList = fasilitasList;
     }
 

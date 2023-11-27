@@ -1,6 +1,8 @@
 package com.example.demo.model;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "fasilitas")
 public class Fasilitas {
@@ -19,6 +21,9 @@ public class Fasilitas {
     @ManyToOne
     @JoinColumn(name = "id_laundry", referencedColumnName = "id")
     private Laundry laundry;
+
+    @OneToMany(mappedBy = "fasilitas")
+    private List<Pesanan> pesananList;
 
     public Fasilitas() {
     }

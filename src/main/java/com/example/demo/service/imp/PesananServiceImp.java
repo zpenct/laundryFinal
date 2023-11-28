@@ -62,6 +62,6 @@ public class PesananServiceImp implements PesananService {
     }
 
     public List<Pesanan> findAllByNama_outlet(String nama_outlet) {
-        return pesananRepos.findAllByNama_outlet(nama_outlet);
+        return pesananRepos.findAllByNamaOutlet(nama_outlet);
     }
 }

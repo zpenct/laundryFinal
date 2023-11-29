@@ -1,5 +1,6 @@
 package com.example.demo.service.imp;
 
+import com.example.demo.OwnValidation.Validation;
 import com.example.demo.dto.LaundryRequestDTO;
 import com.example.demo.dto.LaundryResponseDTO;
 import com.example.demo.mapper.LaundryMapper;
@@ -25,24 +26,21 @@ public class LaundryServiceImp implements LaundryService {
     private final LaundryRepos laundryRepos;
     private final FasilitasRepos fasilitasRepos;
 
-    private boolean isNullOrEmpty(String str) {
-        return str == null || str.trim().isEmpty();
-    }
-
     public LaundryServiceImp(LaundryRepos laundryRepos, FasilitasRepos fasilitasRepos) {
         this.laundryRepos = laundryRepos;
         this.fasilitasRepos = fasilitasRepos;
     }
 
+
     @Override
     @Transactional
     public LaundryResponseDTO create(LaundryRequestDTO dto) {
         if (dto == null ||
-                isNullOrEmpty(dto.nama()) ||
-                isNullOrEmpty(dto.lokasi()) ||
-                isNullOrEmpty(dto.jam_buka()) ||
-                isNullOrEmpty(dto.jam_tutup()) ||
-                isNullOrEmpty(dto.no_hp())
+                Validation.isNullOrEmpty(dto.nama()) ||
+                Validation.isNullOrEmpty(dto.lokasi()) ||
+                Validation.isNullOrEmpty(dto.jam_buka()) ||
+                Validation.isNullOrEmpty(dto.jam_tutup()) ||
+                Validation.isNullOrEmpty(dto.no_hp())
             ) {
             throw new IllegalArgumentException("Data Laundry tidak boleh kosong");
         }

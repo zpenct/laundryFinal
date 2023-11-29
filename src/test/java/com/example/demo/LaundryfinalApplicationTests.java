@@ -1,12 +1,17 @@
 package com.example.demo;
 
 import com.example.demo.controller.LaundryController;
+import com.example.demo.controller.UserController;
 import com.example.demo.dto.FasilitasRequestDTO;
 import com.example.demo.dto.LaundryRequestDTO;
 import com.example.demo.dto.LaundryResponseDTO;
+import com.example.demo.dto.login.LoginRequestDTO;
+import com.example.demo.dto.regsitration.RegistrationRequestDTO;
+import com.example.demo.model.User;
 import com.example.demo.repository.FasilitasRepos;
 import com.example.demo.repository.LaundryRepos;
 import com.example.demo.service.LaundryService;
+import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -15,13 +20,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +51,7 @@ class LaundryfinalApplicationTests {
 	private LaundryService laundryService;
 
 	@Test
-	void test_create() throws Exception {
+	void itShouldCreateLaundry() throws Exception {
 
 		LaundryRequestDTO dto = new LaundryRequestDTO("NAMA", "LOKASI", "07", "09", "123",
 				Arrays.asList(
@@ -62,20 +71,31 @@ class LaundryfinalApplicationTests {
 								.contentType(APPLICATION_JSON_UTF8)
 								.content(requestJson)
 				)
-				.andExpect(status().isOk());
+				.andExpect(status().isOk())
+		;
 	}
 
 	@Test
-	void test_getAll() throws Exception {
+	void itShouldGetListOfLaundry() throws Exception {
 		mockMvc
 				.perform(
 						get("/v1/laundry")
 				)
-				.andExpect(status().isOk());
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$").isArray());
 	}
 
 	@Test
-	void test_getDetails() throws Exception {
+	void itShouldGetListOfLaundryBaseOnLocationQuery() throws Exception {
+		mockMvc
+				.perform(
+						get("/v1/laundry?lokasi=ma")
+				)
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$").isArray());
+	}
+	@Test
+	void itShouldGetLaundry_id1() throws Exception {
 		mockMvc
 				.perform(
 						get("/v1/laundry/1")

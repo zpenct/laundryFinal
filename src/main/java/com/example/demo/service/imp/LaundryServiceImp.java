@@ -82,21 +82,7 @@ public class LaundryServiceImp implements LaundryService {
         Laundry laundryResponse = laundryRepos.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Laundry with ID " + id + " not found"));
         return LaundryMapper.toDTO(laundryResponse, laundryResponse.getFasilitasList());
-//        try {
-//            Laundry laundryResponse = laundryRepos.findById(id)
-//                    .orElseThrow(() -> new EntityNotFoundException("Laundry with ID " + id + " not found"));
-//
-//            return ResponseEntity.ok();LaundryMapper.toDTO(laundryResponse, laundryResponse.getFasilitasList());
-//        } catch (EntityNotFoundException ex) {
-//            // Tangani pengecualian EntityNotFoundException
-//            ex.printStackTrace(); // Untuk sementara, hanya mencetak stack trace
-////            throw new RuntimeException("Failed to find Laundry with ID " + id, ex);
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Laundry with ID " + id + " not found");
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace(); // Untuk sementara, hanya mencetak stack trace
-//            throw new RuntimeException("An unexpected error occurred", ex);
-//        }
+
     }
 
 

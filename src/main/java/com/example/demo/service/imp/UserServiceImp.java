@@ -1,5 +1,6 @@
 package com.example.demo.service.imp;
 
+import com.example.demo.OwnValidation.Validation;
 import com.example.demo.dto.login.LoginRequestDTO;
 import com.example.demo.dto.regsitration.RegistrationRequestDTO;
 import com.example.demo.exception.AuthenticationException;
@@ -17,22 +18,17 @@ public class UserServiceImp implements UserService {
     private final UserRepos userRepos;
 //    private final PasswordEncoder passwordEncoder;
 
-    private boolean isNullOrEmpty(String str) {
-        return str == null || str.trim().isEmpty();
-    }
-
     public UserServiceImp(UserRepos userRepos) {
         this.userRepos = userRepos;
-//        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     @Transactional
     public User registerUser(RegistrationRequestDTO dto) {
         if (dto == null ||
-                isNullOrEmpty(dto.getEmail()) ||
-                isNullOrEmpty(dto.getPassword()) ||
-                isNullOrEmpty(dto.getUsername())
+                Validation.isNullOrEmpty(dto.getEmail()) ||
+                Validation.isNullOrEmpty(dto.getPassword()) ||
+                Validation.isNullOrEmpty(dto.getUsername())
         ) {
             throw new IllegalArgumentException("Isi Semua Field");
         }

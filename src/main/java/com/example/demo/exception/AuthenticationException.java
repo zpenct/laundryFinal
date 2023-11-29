@@ -8,7 +8,6 @@ public class AuthenticationException extends RuntimeException {
     }
 
     private void logError() {
-        // Log error ke sistem atau layanan log yang sesuai
         System.out.println("Error Log: User Authentication - " + getMessage());
     }
 

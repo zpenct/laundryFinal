@@ -16,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class UserServiceImp implements UserService {
     private final UserRepos userRepos;
-//    private final PasswordEncoder passwordEncoder;
 
     public UserServiceImp(UserRepos userRepos) {
         this.userRepos = userRepos;
@@ -41,7 +40,6 @@ public class UserServiceImp implements UserService {
         newUser.setEmail(dto.getEmail());
         newUser.setUsername(dto.getUsername());
 
-//      newUser.setPassword(passwordEncoder.encode(dto.getPassword()));
         newUser.setPassword(dto.getPassword());
 
         return userRepos.save(newUser);
@@ -54,11 +52,6 @@ public class UserServiceImp implements UserService {
 
         User user = userRepos.findByEmail(email)
                 .orElseThrow(() -> new AuthenticationException("User not registered: " + email));
-
-        // Memeriksa kata sandi
-//        if (!passwordEncoder.matches(password, user.getPassword())) {
-//            throw new UserAuthenticationException("Incorrect password for user: " + email);
-//        }
         return user;
     }
 

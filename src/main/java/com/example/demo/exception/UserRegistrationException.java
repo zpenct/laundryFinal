@@ -6,5 +6,4 @@ public class UserRegistrationException extends RuntimeException {
         super(message);
     }
 
-    // Additional methods if needed
 }

@@ -31,7 +31,6 @@ public class LaundryServiceImp implements LaundryService {
         this.fasilitasRepos = fasilitasRepos;
     }
 
-
     @Override
     @Transactional
     public LaundryResponseDTO create(LaundryRequestDTO dto) {
@@ -82,6 +81,4 @@ public class LaundryServiceImp implements LaundryService {
         return LaundryMapper.toDTO(laundryResponse, laundryResponse.getFasilitasList());
 
     }
-
-
 }
